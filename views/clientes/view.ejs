@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+<h1>Detalle de <%= cliente.nombre %></h1>
+<p>Dirección: <%= cliente.direccion %></p>
+<p>Teléfono: <%= cliente.telefono %></p>
+<p>Correo: <%= cliente.correo %></p>
+<h2>Documentos:</h2>
+<% cliente.documentos.forEach(doc => { %>
+  <img src="<%= doc %>" alt="Documento" class="img-thumbnail" style="max-width: 200px;">
+<% }) %>
+<h2>Historial de Préstamos:</h2>
+<ul>
+  <% cliente.historialPrestamos.forEach(prestamo => { %>
+    <li><a href="/prestamos/<%= prestamo._id %>">Préstamo de <%= prestamo.monto %> (Estado: <%= prestamo.estado %>)</a></li>
+  <% }) %>
+</ul>
+<a href="/pagos/estado/<%= cliente._id %>" class="btn btn-info">Ver Estado de Cuenta</a>
+<%- include('../partials/footer') %>

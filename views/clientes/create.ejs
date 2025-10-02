@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<h1>Crear Cliente</h1>
+<form action="/clientes/create" method="POST" enctype="multipart/form-data">
+  <div>
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required>
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="email" name="correo" required>
+  </div>
+  <div>
+    <label>Teléfono:</label>
+    <input type="text" name="telefono" required>
+  </div>
+  <div>
+    <label>CURP (foto):</label>
+    <input type="file" name="documentos" accept="image/*" multiple>
+  </div>
+  <button type="submit">Agregar</button>
+</form>
+<%- include('../partials/footer') %>

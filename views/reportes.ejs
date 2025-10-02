@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+<h1>Reportes y Estadísticas</h1>
+<div class="container">
+  <div class="card">
+    <canvas id="gananciasChart" width="600" height="300"></canvas>
+    <div id="noDataMsg" style="display:none; text-align:center; color:#888; font-size:1.2em; margin-top:2em;">
+      No hay datos suficientes para mostrar la gráfica real. Se muestran datos de ejemplo.
+    </div>
+  </div>
+  <h2>Préstamos</h2>
+  <p>Activos: <%= activos || 'N/A' %></p>
+  <p>Vencidos: <%= vencidos || 'N/A' %></p>
+  <p>Pagados: <%= pagados || 'N/A' %></p>
+  <h2>Ingresos por Intereses: <%= ingresos || 'N/A' %></h2>
+  <h2>Clientes Más Cumplidos</h2>
+  <ul>
+    <% if (Array.isArray(clientesCumplidos) && clientesCumplidos.length > 0) { %>
+      <% clientesCumplidos.forEach(c => { %>
+        <li><%= c.nombre %> (Cumplidos: <%= c.cumplidos %>)</li>
+      <% }) %>
+    <% } else { %>
+      <li>No hay datos de clientes cumplidos.</li>
+    <% } %>
+  </ul>
+  <h2>Deudores Frecuentes</h2>
+  <ul>
+    <% if (Array.isArray(deudores) && deudores.length > 0) { %>
+      <% deudores.forEach(d => { %>
+        <li><%= d.nombre %> (Vencidos: <%= d.vencidos %>)</li>
+      <% }) %>
+    <% } else { %>
+      <li>No hay datos de deudores frecuentes.</li>
+    <% } %>
+  </ul>
+</div>
+<%- include('partials/footer') %>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Datos enviados desde el backend (ya son arrays)
+    let labels = <%- JSON.stringify(labels) %>;
+    let dataMes = <%- JSON.stringify(dataMes) %>;
+    let dataAnual = <%- JSON.stringify(dataAnual) %>;
+
+    // Si no hay datos, usar datos de ejemplo y mostrar mensaje
+    let showExample = false;
+    if (!Array.isArray(labels) || labels.length === 0 ||
+        !Array.isArray(dataMes) || dataMes.length === 0 ||
+        dataMes.every(v => v === 0)) {
+      labels = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"];
+      dataMes = [1200, 1500, 1100, 1800, 1700, 1600];
+      dataAnual = [1200, 2700, 3800, 5600, 7300, 8900];
+      showExample = true;
+    }
+
+    const ctx = document.getElementById('gananciasChart')?.getContext('2d');
+    if (!ctx) return;
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Ganancia Mensual',
+            data: dataMes,
+            backgroundColor: 'rgba(126, 200, 227, 0.7)',
+            borderColor: 'rgba(126, 200, 227, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Ganancia Anual',
+            data: dataAnual,
+            backgroundColor: 'rgba(168, 230, 207, 0.7)',
+            borderColor: 'rgba(168, 230, 207, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: { display: true, text: 'Ganancias por Mes y Acumulado Anual' }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+    if (showExample) {
+      document.getElementById('noDataMsg').style.display = "block";
+    }
+  });
+</script>

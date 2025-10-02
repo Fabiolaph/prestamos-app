@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+<h1>Registrar Pago para Préstamo de <%= prestamo.cliente.nombre %></h1>
+<form action="/pagos/create" method="POST">
+  <input type="hidden" name="prestamo" value="<%= prestamo._id %>">
+  <div>
+    <label>Cliente:</label>
+    <input type="text" value="<%= prestamo.cliente.nombre %>" disabled>
+  </div>
+  <div>
+    <label>Monto:</label>
+    <input type="number" name="monto" required>
+  </div>
+  <button type="submit">Registrar Pago</button>
+</form>
+<%- include('../partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<h1>Lista de Préstamos</h1>
+<a href="/prestamos/create" class="btn btn-primary" style="margin-bottom: 1em;">Agregar Préstamo</a>
+<table class="table table-striped">
+  <thead><tr><th>Cliente</th><th>Monto</th><th>Intereses</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead>
+  <tbody>
+    <% prestamos.forEach(p => { %>
+      <tr class="<%= p.estado === 'vencido' ? 'table-danger' : p.estado === 'pagado' ? 'table-success' : '' %>">
+        <td><%= p.cliente.nombre %></td>
+        <td><%= p.monto %></td>
+        <td><%= p.intereses %></td>
+        <td><%= p.fechaVencimiento.toDateString() %></td>
+        <td><%= p.estado %></td>
+        <td><a href="/prestamos/<%= p._id %>">Ver</a> | <a href="/pagos/create/<%= p._id %>">Agregar Pago</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('../partials/footer') %>
