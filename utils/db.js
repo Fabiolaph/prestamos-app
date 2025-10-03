@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/prestamosDB', {
+    await mongoose.connect('mongodb+srv://a23328061310457_db_user:PEHW080427MTSRRNA5@prestamosapp.hzcorg5.mongodb.net/?retryWrites=true&w=majority&appName=prestamosapp', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

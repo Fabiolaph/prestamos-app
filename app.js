@@ -36,4 +36,8 @@ app.get('/', (req, res) => {
   res.redirect('/login');
 });
 
-app.listen(process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Servidor corriendo en puerto ${port}`);
+  console.log(`Navega en: http://localhost:${port}`);
+});
