@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+<h1>Lista de Clientes</h1>
+<a href="/clientes/create" class="btn btn-primary" style="margin-bottom: 1em;">Agregar Cliente</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% clientes.forEach(cliente => { %>
+      <tr>
+        <td><%= cliente.nombre %></td>
+        <td><%= cliente.correo %></td>
+        <td><%= cliente.telefono %></td>
+        <td><a href="/clientes/view/<%= cliente._id %>">Ver</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+<%- include('../partials/footer') %>
